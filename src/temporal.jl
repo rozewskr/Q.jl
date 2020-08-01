@@ -66,9 +66,9 @@ Time(h::Int32, mi::Int32=0, s::Int32=0, ms::Int32=0) = Time(Int,
     10^3*(Int32(60)*(Int32(60)*h + mi) + s) + ms)
 
 # Accessors
-using Dates.value
-Dates.year(m::Month) = fld(Int32(24000)+value(m), Int32(12))
-Dates.month(m::Month) = 1 + mod(value(m), Int32(12))
+
+Dates.year(m::Month) = fld(Int32(24000)+Dates.value(m), Int32(12))
+Dates.month(m::Month) = 1 + mod(Dates.value(m), Int32(12))
 Dates.days(m::Month) = Dates.totaldays(Dates.year(m), Dates.month(m), 1)
 Dates.days(t::TimeStamp) = fld(Dates.value(t), Int64(86400)*10^9) - DATE_SHIFT
 
