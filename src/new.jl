@@ -187,7 +187,7 @@ function asarray(x::K_, own::Bool=true)
     T, o, s = cinfo(x)
     a = unsafe_wrap(Array, Ptr{T}(x + o), s)
     if own
-        finalizer(K_(pointer(b)-o))
+        finalizer(K_(pointer(a)-o))
     end
     a
 end
