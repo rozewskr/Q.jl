@@ -1,4 +1,5 @@
 export GOT_Q, @k_sym
+using Libdl
 let h = unsafe_load(cglobal(:jl_exe_handle, Ptr{Nothing}))
     # Is Julia running embedded in q?
     global const GOT_Q = Libdl.dlsym_e(h, :b9) != C_NULL
