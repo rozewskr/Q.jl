@@ -97,7 +97,7 @@ end
 K_new(x::K_) = r1(x)
 ## Conversion of simple types
 const _none = ktj(101, 0)
-K_new(::Void) = r1(_none)
+K_new(::Nothing) = r1(_none)
 K_new(x::Bool) = kb(x)
 K_new(x::UInt128) = ku(x)
 K_new(x::UInt8) = kg(x)

@@ -14,7 +14,7 @@ for T in (Int8, Int16, Int32, Int64, Int128, Float32, Float64)
 end
 
 # Julia to K conversions
-Base.convert(::Type{K}, ::Void) = K_None
+Base.convert(::Type{K}, ::Nothing) = K_None
 function Base.convert(::Type{K}, x::K_)
     @assert x != C_NULL
     t = xt(x)

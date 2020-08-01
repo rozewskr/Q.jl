@@ -32,7 +32,7 @@ const I_ = Cint
 const J_ = Clonglong
 const E_ = Cfloat
 const F_ = Cdouble
-const V_ = Void
+const V_ = Nothing
 const U_ = UInt128
 struct k0
     m::C_

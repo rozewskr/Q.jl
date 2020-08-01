@@ -43,7 +43,7 @@ end
 
 # See julia.h.
 struct jl_array_t
-    data   :: Ptr{Void} # (1)  sizeof(Ptr)
+    data   :: Ptr{Nothing} # (1)  sizeof(Ptr)
     length :: Csize_t   # (2) + sizeof(Ptr)
     flags  :: UInt16    # (3) + 2 bytes
     elsize :: UInt16    # (4) + 2 bytes
@@ -62,7 +62,7 @@ function resetvector(a::Vector, size::Integer, data::Ptr)
     @assert d.data == pointer(a)
     @assert d.length == d.nrows == length(a)
     # replant the data pointer
-    unsafe_store!(Ptr{Ptr{Void}}(p), data)
+    unsafe_store!(Ptr{Ptr{Nothing}}(p), data)
     # update the size
     unsafe_store!(Ptr{Csize_t}(p + offset_length), size)
     unsafe_store!(Ptr{Csize_t}(p + offset_nrows), size)
