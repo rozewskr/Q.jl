@@ -1,5 +1,6 @@
 export GOT_Q, @k_sym
 using Libdl
+using Printf
 let h = unsafe_load(cglobal(:jl_exe_handle, Ptr{Nothing}))
     # Is Julia running embedded in q?
     global const GOT_Q = Libdl.dlsym_e(h, :b9) != C_NULL
@@ -14,7 +15,7 @@ else      # Load "c" DLL
         :Linux => 'l',
         :Darwin => 'm',
     )
-    const SYS_ARCH = print("This breaks", SYS_CHAR[Sys.KERNEL], Sys.WORD_SIZE)
+    const SYS_ARCH = @sprintf("%c%d", SYS_CHAR[Sys.KERNEL], Sys.WORD_SIZE)
     const C_SO_PATH = joinpath(dirname(@__FILE__), SYS_ARCH, "c")
     const C_SO = Libdl.dlopen(C_SO_PATH,
                 Libdl.RTLD_LAZY|Libdl.RTLD_DEEPBIND|Libdl.RTLD_GLOBAL)
