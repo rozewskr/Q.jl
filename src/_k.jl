@@ -243,8 +243,5 @@ k(h::Integer, m::String,
             K_, (I_, S_, K_, K_, K_, K_, K_, K_, K_, K_, K_),
                 h, m, x1, x2, x3, x4, x5, x6, x7, x8, K_NULL)
 # Make sure we don't redefine basic pointer conversions.
-using Base.bitcast
-Base.convert(::Type{K_}, p::K_) = p
-Base.convert(::Type{K_}, p::Ptr) = bitcast(K_, p)
-Base.convert(::Type{K_}, p::UInt) = bitcast(K_, p)
+
 end # module k
