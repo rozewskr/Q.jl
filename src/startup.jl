@@ -14,7 +14,7 @@ else      # Load "c" DLL
         :Linux => 'l',
         :Darwin => 'm',
     )
-    const SYS_ARCH = @sprintf("%c%d", SYS_CHAR[Sys.KERNEL], Sys.WORD_SIZE)
+    const SYS_ARCH = print("This breaks", SYS_CHAR[Sys.KERNEL], Sys.WORD_SIZE)
     const C_SO_PATH = joinpath(dirname(@__FILE__), SYS_ARCH, "c")
     const C_SO = Libdl.dlopen(C_SO_PATH,
                 Libdl.RTLD_LAZY|Libdl.RTLD_DEEPBIND|Libdl.RTLD_GLOBAL)
