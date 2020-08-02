@@ -1,3 +1,5 @@
+using Dates
+
 @testset "temporal" begin
     let x = Q.TimeStamp(2001, 1, 2, 3, 4, 5, 123, 456, 789)
         @test Dates.days(x) == Dates.value(Date(2001, 1, 2))

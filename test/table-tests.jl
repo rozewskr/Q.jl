@@ -1,5 +1,5 @@
 using TableTraits
-using NamedTuples
+
 import IterableTables
 
 @testset "table tests" begin

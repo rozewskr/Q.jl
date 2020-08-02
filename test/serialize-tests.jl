@@ -1,3 +1,4 @@
+using Serialization
 function roundtrip(x)
     io = IOBuffer()
     serialize(io, x)

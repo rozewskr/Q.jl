@@ -1,5 +1,4 @@
 import TableTraits
-import NamedTuples
 using Serialization
 struct K_Table  <: AbstractDataFrame
     a::Array{K_,0}
