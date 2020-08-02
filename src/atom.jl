@@ -48,7 +48,6 @@ for (class, super) in SUPERTYPE
         Base.ndims(x::$class) = 0
         Base.ndims(x::Type{$class}) = 0
         Base.length(x::$class) = 1
-        Base.endof(x::$class) = 1
         # payload
         Base.eltype(::Type{$class{t,C,T}}) where {t,C,T} = T
         Base.eltype(x::$class) = eltype(typeof(x))
@@ -60,6 +59,7 @@ for (class, super) in SUPERTYPE
             _serialize(io, x, typeof(x))
     end
 end
+
 @eval const K_Atom = Union{$(K_CLASSES...)}
 
 K_CLASS = Dict{Int8,Type}()
