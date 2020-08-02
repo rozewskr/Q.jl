@@ -1,5 +1,5 @@
 using Dates
-
+using Serialization
 # Supertypes for atomic q types.
 const SUPERTYPE = Dict(
     :_Bool     => Integer,
@@ -55,7 +55,7 @@ for (class, super) in SUPERTYPE
         Base.pointer(x::$class{t,C,T}) where {t,C,T} = pointer(x.a)
         Base.show(io::IO, x::$class{t,C,T}) where {t,C,T} = print(io,
             "K(", repr(_cast(T, x.a[])), ")")
-        Base.serialize(io::AbstractSerializer, x::$class) =
+        Serialization.serialize(io::Serialization.AbstractSerializer, x::$class) =
             _serialize(io, x, typeof(x))
     end
 end
