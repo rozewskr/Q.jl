@@ -2,7 +2,7 @@ module Q
 export K, K_Atom, K_Vector, K_Table, K_KeyTable
 export hopen, hclose, hget
 export KdbException
-
+using Dates
 using DataFrames
 
 """
