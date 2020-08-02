@@ -1,6 +1,6 @@
 struct K_Mark end
 
-function _serialize(s::AbstractSerializer, x, T::Type)
+function _serialize(s::Serializer, x, T::Type)
     Base.serialize_type(s, K_Mark)
     serialize(s, T)
     # 3 - unenumerate, compress, allow serialization of timespan and timestamp
@@ -9,7 +9,7 @@ function _serialize(s::AbstractSerializer, x, T::Type)
     write(s.io, b.a)
 end
 
-function Base.deserialize(s::AbstractSerializer, ::Type{K_Mark})
+function Base.deserialize(s::Serializer, ::Type{K_Mark})
     T = deserialize(s)
     n = read(s.io, Int64)
     b = _vector(KG, n)
