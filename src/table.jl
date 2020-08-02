@@ -1,6 +1,6 @@
 import TableTraits
 import NamedTuples
-
+using Serialization
 struct K_Table  <: AbstractDataFrame
     a::Array{K_,0}
     function K_Table(x::K_)
@@ -42,7 +42,7 @@ valptr(x::K_Table, i) = unsafe_load(Ptr{K_}(xy(x.a[])+16), i)
 colnames(x::K_Table) = K(r1(xx(x.a[])))
 coldata(x::K_Table) = K(r1(xy(x.a[])))
 
-Base.serialize(io::AbstractSerializer, x::K_Table) =
+Serialization.serialize(io::Serialization.AbstractSerializer, x::K_Table) =
     _serialize(io, x, typeof(x))
 
 DataFrames.ncol(x::K_Table) = Int(xn(xx(x.a[])))

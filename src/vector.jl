@@ -1,3 +1,5 @@
+using Serialization
+
 struct K_Vector{t,C,T} <: AbstractVector{T}
     a::Vector{C}
     function K_Vector{t,C,T}(x::K_) where {t,C,T}
@@ -15,7 +17,7 @@ Base.convert(::Type{String}, x::K_Chars) = String(x.a)
 Base.print(io::IO, x::K_Chars) = print(io, String(x))
 Base.show(io::IO, x::K_Chars) = print(io, "K(", repr(String(x)), ")")
 Base.show(io::IO, ::MIME"text/plain", x::K_Chars) = show(io, x)
-Base.serialize(io::AbstractSerializer, x::K_Vector) =
+Serialization.serialize(io::Serialization.AbstractSerializer, x::K_Vector) =
     _serialize(io, x, typeof(x))
 function K_Vector(x::K_)
     t = xt(x)

@@ -1,4 +1,5 @@
 using DataFrames
+using Serialization
 
 struct K_KeyTable  <: AbstractDataFrame
     a::Array{K_,1}
@@ -34,7 +35,7 @@ nval(x::K_KeyTable) = Int(xn(xx(xk(x.a[2]))))
 colnames(x::K_KeyTable) = [K(r1(xx(xk(x.a[1]))));
                            K(r1(xx(xk(x.a[2]))))]
 
-Base.serialize(io::AbstractSerializer, x::K_KeyTable) =
+Serialization.serialize(io::Serialization.AbstractSerializer, x::K_KeyTable) =
     _serialize(io, x, typeof(x))
 
 DataFrames.ncol(x::K_KeyTable) = nkey(x) + nval(x)
