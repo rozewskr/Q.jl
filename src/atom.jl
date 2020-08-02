@@ -1,4 +1,4 @@
-using Dates.AbstractTime
+using Dates
 
 # Supertypes for atomic q types.
 const SUPERTYPE = Dict(
