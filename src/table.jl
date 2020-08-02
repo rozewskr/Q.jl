@@ -30,7 +30,7 @@ struct K_Table  <: AbstractDataFrame
     end
 end
 K_Table(df::AbstractDataFrame) = K_Table(K_new(df))
-function K_Table(::Type{T}, n::Integer) where T <: NamedTuples.NamedTuple
+function K_Table(::Type{T}, n::Integer) where T <: NamedTuple
     cols = fieldnames(T)
     x = K_new(cols)
     y = knk(length(cols), (ktn(ktypecode(S), n) for S in T.types)...)
