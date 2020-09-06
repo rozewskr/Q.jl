@@ -15,4 +15,4 @@ function _eval_string(x::K_)
     p
 end
 
-const _eval_string_c = cfunction(_eval_string, K_, (K_, ))
+const _eval_string_c = Base.@cfunction(_eval_string, K_, (K_, ))
