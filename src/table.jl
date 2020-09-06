@@ -90,7 +90,6 @@ end
 
 Base.length(iter::K_Table_Iter{T,TS}) where {T,TS} = size(iter.x,1)
 Base.eltype(iter::K_Table_Iter{T,TS}) where {T,TS} = T
-Base._start(iter::K_Table_Iter{T,TS}) where {T,TS} = 1
 
 @generated function Base.iterate(iter::K_Table_Iter{T,TS}, state) where {T,TS}
     constructor_call = :($T())
@@ -99,8 +98,6 @@ Base._start(iter::K_Table_Iter{T,TS}) where {T,TS} = 1
     end
     :($constructor_call, state + 1)
 end
-
-Base.done(iter::K_Table_Iter{T,TS}, state) where {T,TS} = state > length(iter)
 
 function K_Table(source)
     iter = TableTraits.getiterator(source)
