@@ -29,7 +29,7 @@ q_command() = `$(kdb_binary())`
 Start a slave kdb+ process and return a comm handle.
 """
 function start()
-    p = Base.Threads.@spawn(q_command(), (Pipe(), Pipe(), Base.stderr))
+    p = Base.Threads.@spawn(q_command(), (Pipe(), Pipe()))
     write(p.in, STARTUP_CODE)
     port = readline(p.out)
     close(p.out)
