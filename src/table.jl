@@ -30,7 +30,7 @@ struct K_Table  <: AbstractDataFrame
     end
 end
 K_Table(df::AbstractDataFrame) = K_Table(K_new(df))
-function K_Table(::Type{T}, n::Integer) where T <: NamedTuple
+function K_Table(::Type{T}, n::Integer) where {T <: NamedTuple}
     cols = fieldnames(T)
     x = K_new(cols)
     y = knk(length(cols), (ktn(ktypecode(S), n) for S in T.types)...)
@@ -88,9 +88,9 @@ function TableTraits.getiterator(x::K_Table)
     iter_type(x, (columns...))
 end
 
-Base.length{T,TS}(iter::K_Table_Iter{T,TS}) = size(iter.x,1)
-Base.eltype{T,TS}(iter::K_Table_Iter{T,TS}) = T
-Base.start{T,TS}(iter::K_Table_Iter{T,TS}) = 1
+Base.length(iter::K_Table_Iter{T,TS}) where {T,TS} = size(iter.x,1)
+Base.eltype(iter::K_Table_Iter{T,TS}) where {T,TS} = T
+Base.start(iter::K_Table_Iter{T,TS}) where {T,TS} = 1
 
 @generated function Base.next{T,TS}(iter::K_Table_Iter{T,TS}, state)
     constructor_call = :($T())
