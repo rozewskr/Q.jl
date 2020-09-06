@@ -1,5 +1,5 @@
 using Base.Test
-import Base: REPL, LineEdit
+import REPL
 import Q.KdbMode: install_kdb_mode
 
 mutable struct FakeTerminal <: Base.Terminals.UnixTerminal
@@ -21,7 +21,7 @@ function fake_repl()
     p = [Pipe() for _ in 1:3]
     map(Base.link_pipe, p)
     term = FakeTerminal(p[1].out, p[2].in, p[3].in)
-    repl = Base.REPL.LineEditREPL(term)
+    repl = REPL.LineEditREPL(term)
     repl.history_file = false
     p[1].in, p[2].out, p[3].out, repl
 end
@@ -30,7 +30,7 @@ stdin, stdout, stderr, repl = fake_repl()
 
 
 repltask = @async begin
-    Base.REPL.run_repl(repl)
+    REPL.run_repl(repl)
 end
 @testset "REPL" begin
     write(stdin, "42\r")
