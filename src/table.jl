@@ -90,7 +90,7 @@ end
 
 Base.length(iter::K_Table_Iter{T,TS}) where {T,TS} = size(iter.x,1)
 Base.eltype(iter::K_Table_Iter{T,TS}) where {T,TS} = T
-Base.start(iter::K_Table_Iter{T,TS}) where {T,TS} = 1
+Base._start(iter::K_Table_Iter{T,TS}) where {T,TS} = 1
 
 @generated function Base.next{T,TS}(iter::K_Table_Iter{T,TS}, state)
     constructor_call = :($T())
