@@ -92,7 +92,7 @@ Base.length(iter::K_Table_Iter{T,TS}) where {T,TS} = size(iter.x,1)
 Base.eltype(iter::K_Table_Iter{T,TS}) where {T,TS} = T
 Base._start(iter::K_Table_Iter{T,TS}) where {T,TS} = 1
 
-@generated function Base.next(iter::K_Table_Iter{T,TS}, state) where {T,TS}
+@generated function Base.iterate(iter::K_Table_Iter{T,TS}, state) where {T,TS}
     constructor_call = :($T())
     for i in 1:length(iter.types[2].types)
         push!(constructor_call.args, :(iter.columns[$i][state]))
