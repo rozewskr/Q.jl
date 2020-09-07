@@ -5,7 +5,7 @@ const QHOME = get(Dict(ENV), "QHOME") do
     joinpath(homedir(), "q")
 end
 const STARTUP_CODE = """
-p:1024
+p:1001
 while[0~@[system;"p ",string p;0];p+:1]
 -1 string p
 \\1 /dev/null
@@ -30,10 +30,10 @@ Start a slave kdb+ process and return a comm handle.
 """
 function start()
     open(q_command(), "w+") do p
-        write(p.in, STARTUP_CODE)
+        write(p, STARTUP_CODE)
         port = readline(p.out)
-        close(p.out)
         parse(Int, port), p
+        close(p)
         end
 end
 
@@ -48,3 +48,5 @@ function __init__()
     QBIN = kdb_binary()
 end
 end  # module Kdb
+
+Kdb.start()
