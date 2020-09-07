@@ -34,9 +34,9 @@ function start()
         write(p.in, STARTUP_CODE)
         port = readline(p.out)
         println(port)
-        parse(Int, port)
+        close(p.out)
         print("closing")
-        close(p)
+        parse(Int, port), p
         end
 end
 
@@ -51,5 +51,3 @@ function __init__()
     QBIN = kdb_binary()
 end
 end  # module Kdb
-
-Kdb.start()
