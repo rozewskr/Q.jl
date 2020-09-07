@@ -34,7 +34,8 @@ function start()
         write(p.in, STARTUP_CODE)
         port = readline(p.out)
         println(port)
-        parse(Int, port), p
+        parse(Int, port)
+        print("closing")
         close(p)
         end
 end
