@@ -30,8 +30,10 @@ Start a slave kdb+ process and return a comm handle.
 """
 function start()
     open(q_command(), "w+") do p
-        write(p, STARTUP_CODE)
+        println("Writing startup code")
+        write(p.in, STARTUP_CODE)
         port = readline(p.out)
+        println(port)
         parse(Int, port), p
         close(p)
         end
