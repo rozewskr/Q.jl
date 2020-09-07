@@ -29,11 +29,12 @@ q_command() = `$(kdb_binary())`
 Start a slave kdb+ process and return a comm handle.
 """
 function start()
-    @async p = open(q_command(), "rw", Base.stderr)
-    write(p.in, STARTUP_CODE)
-    port = readline(p.out)
-    close(p.out)
-    parse(Int, port), p
+    open(q_command(), "rw", Base.stderr) do p
+        write(p.in, STARTUP_CODE)
+        port = readline(p.out)
+        close(p.out)
+        parse(Int, port), p
+        end
 end
 
 function stop(handle, process)
