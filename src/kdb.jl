@@ -37,7 +37,6 @@ function start()
         close(p.out)
         print("closing")
         parse(Int, port), p
-        end
 end
 
 function stop(handle, process)
