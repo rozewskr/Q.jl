@@ -1,8 +1,9 @@
+JULIA_HOME = $(shell julia -e 'print(JULIA_HOME)')
 JL_SHARE = $(shell julia -e 'print(joinpath(JULIA_HOME,Base.DATAROOTDIR,"julia"))')
 JULIA_HOME = $(shell julia -e 'print(JULIA_HOME)')
-JULIA_LIB = $(shell julia -e 'print(abspath(Libdl.dlpath("libjulia")))')
+JULIA_LIB = $(shell julia -e 'print(abspath(dlpath("libjulia")))')
 JULIA_DEBUG_LIB = \
-  $(shell $(JULIA_HOME)/julia-debug -e 'print(abspath(Libdl.dlpath("libjulia-debug")))')
+  $(shell $(JULIA_HOME)/julia-debug -e 'print(abspath(dlpath("libjulia-debug")))')
 CFLAGS   += -DKXVER=3 -O0 -g
 CFLAGS   += $(shell $(JL_SHARE)/julia-config.jl --cflags)
 CXXFLAGS += $(shell $(JL_SHARE)/julia-config.jl --cflags)
