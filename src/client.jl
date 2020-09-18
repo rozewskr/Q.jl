@@ -89,15 +89,15 @@ function open_default_kdb_handle(msg_io=STDERR)
         handle = hopen(port)
         atexit() do
             rc = Q.Kdb.stop(handle, process)
-            info("Slave kdb+ exited with code $rc.")
+            @info("Slave kdb+ exited with code $rc.")
         end
-        info(msg_io, "Connected to $port.")
+        @info(msg_io, "Connected to $port.")
     else
         try
             handle = hopen(server_spec)
-            info(msg_io, "Connected to $server_spec.")
+            @info(msg_io, "Connected to $server_spec.")
         catch error
-            warn(msg_io,
+            @warn(msg_io,
                  "Could not connect to $server_spec. $error")
             handle = -1
         end
