@@ -1,5 +1,6 @@
 module KdbMode
     import REPL
+    import REPL.LineEdit
     import Q._k: k, kj, kp
     import Q: K_new, chkparens
     using Q

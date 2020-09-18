@@ -9,3 +9,4 @@ version = "1.0"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 NamedTuples = "73a701b4-84e1-5df0-88ff-1968ee2ee8dc"
 TableTraits = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
+Libdl
