@@ -1,4 +1,5 @@
 import TableTraits
+import DataFrames: _check_consistency!
 using Serialization
 struct K_Table  <: AbstractDataFrame
     a::Array{K_,0}
@@ -52,7 +53,7 @@ function DataFrames.names!(x::K_Table, vals; allow_duplicates=true)
     kS(kK(x.a[])[1])[:] = map(ss, u)
     x
 end
-
+_check_consistency(x::K_Table) = _check_consistency(x)
 Base.getindex(x::K_Table, i::Integer) = K(r1(valptr(x, i)))
 Base.getindex(x::K_Table, i::Integer, j::Integer) = x[j][i]
 Base.getindex(x::K_Table, i::Symbol) = x[DataFrames.index(x)[i]]
