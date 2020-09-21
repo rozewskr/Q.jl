@@ -1,3 +1,4 @@
+#define JULIA_ENABLE_THREADING
 #include <julia.h>
 #include <dlfcn.h>
 #include "k.h"
