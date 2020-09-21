@@ -118,7 +118,7 @@ function K_new(a::Vector{T}) where {T<:Number}
     C = C_TYPE[t]
     n = length(a)
     x = ktn(t, n)
-    unsafe_copy!(Ptr{C}(x+16), pointer(a), n)
+    unsafe_copyto!(Ptr{C}(x+16), pointer(a), n)
     return x
 end
 function K_new(a::AbstractVector{T}) where {T<:Number}

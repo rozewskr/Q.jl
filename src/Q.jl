@@ -139,8 +139,6 @@ else
 end
 include("parser.jl")
 include("q-prompt.jl")
-print("just before kdb.jl")
 include("kdb.jl")
-println("included kdb.jl")
 include("q-cmd.jl")
 end # module Q

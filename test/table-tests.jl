@@ -1,6 +1,7 @@
 using TableTraits
-
+using Test
 import IterableTables
+using Q
 
 @testset "table tests" begin
   let x = K_Table(a=[1, 2])
@@ -27,7 +28,7 @@ import IterableTables
     @test (x = K_Table(a=Int[]); names(names!(x, [:b])) == [:b])
     @test (x = K_Table(a=Int[]); x[:a] == Int[])
   end
-  @test (x = K_Table(@NT(a::Int, b::Float64), 3); size(x) == (3, 2))
+  @test (x = K_Table((a::Int, b::Float64), 3); size(x) == (3, 2))
   @test begin
     t = K_Table(a=[1])
     Q.coldata(t)[1] = push!(t[1], 2)
@@ -41,14 +42,14 @@ end
     @test isiterable(t)
     @test isiterabletable(t)
     @test length(ti) == 3
-    @test eltype(ti) == typeof(@NT(a=0, b=0.))
+    @test eltype(ti) == typeof((a=0, b=0.))
     @test start(ti) == 1
     @test collect(ti) == [
-      @NT(a=0, b=0.),
-      @NT(a=1, b=10.),
-      @NT(a=2, b=20.),
+      (a=0, b=0.),
+      (a=1, b=10.),
+      (a=2, b=20.),
     ]
   end
-  @test K_Table([@NT(a=1), @NT(a=2)]) == DataFrame(a=[1,2])
-  @test K_Table(@NT(a=i) for i in 1:3 if i != 2) == DataFrame(a=[1,3])
+  @test K_Table([(a=1), (a=2)]) == DataFrame(a=[1,2])
+  @test K_Table((a=i) for i in 1:3 if i != 2) == DataFrame(a=[1,3])
 end
