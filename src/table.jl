@@ -45,12 +45,12 @@ coldata(x::K_Table) = K(r1(xy(x.a[])))
 Serialization.serialize(io::Serialization.AbstractSerializer, x::K_Table) =
     _serialize(io, x, typeof(x))
 
-DataFrames.ncol(x::K_Table) = Int(xn(xx(x.a[])))
-Print(DataFrames.ncol)
-DataFrames.nrow(x::K_Table) = Int(xn(valptr(x, 1)))
-Print(DataFrames.nrow)
-DataFrames.index(x::K_Table) = DataFrames.Index(Array(colnames(x)))
-Print(DataFrames.index)
+ncol(x::K_Table) = Int(xn(xx(x.a[])))
+
+nrow(x::K_Table) = Int(xn(valptr(x, 1)))
+
+index(x::K_Table) = DataFrames.Index(Array(colnames(x)))
+
 function DataFrames.names!(x::K_Table, vals; allow_duplicates=true)
     u = DataFrames.make_unique(vals, allow_duplicates=allow_duplicates)
     kS(kK(x.a[])[1])[:] = map(ss, u)
