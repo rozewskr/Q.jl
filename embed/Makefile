@@ -1,5 +1,5 @@
 JULIA_HOME = $(shell julia -e 'print(JULIA_HOME)')
-JL_SHARE = $(shell julia -e 'print(joinpath(JULIA_HOME,Base.DATAROOTDIR,"julia"))')
+JL_SHARE = $(shell julia -e 'print(joinpath(Sys.BINDIR,Base.DATAROOTDIR,"julia"))')
 JULIA_HOME = $(shell julia -e 'print(JULIA_HOME)')
 JULIA_LIB = $(shell julia -e 'using Libdl; print(abspath(Libdl.dlpath("libjulia")))')
 JULIA_DEBUG_LIB = \
