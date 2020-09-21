@@ -1,3 +1,5 @@
+using Test
+using Q
 @testset "Communications" begin
   server() do port
     @test port isa Int32
@@ -62,4 +64,3 @@
     end
   end
 end
-

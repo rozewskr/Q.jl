@@ -1,7 +1,7 @@
 import TableTraits
-import DataFrames: _check_consistency!
 using Serialization
-struct K_Table  <: AbstractDataFrame
+using DataFrames
+struct K_Table
     a::Array{K_,0}
     function K_Table(x::K_)
         a = asarray(x)
@@ -9,14 +9,14 @@ struct K_Table  <: AbstractDataFrame
         if(t != XT)
             throw(ArgumentError("type mismatch: t=$t ≠ $XT"))
         end
-        return new(a)
+        return DataFrames.DataFrame(a)
     end
     function K_Table(columns::Vector, colnames::Vector{Symbol})
         ncols = length(columns)
         x = K_new(colnames)
         y = K_new(columns)
         a = asarray(xT(xD(x, y)))
-        new(a)
+        DataFrames.DataFrame(a)
     end
     function K_Table(; kwargs...)
         x = ktn(KS, 0)
@@ -27,10 +27,10 @@ struct K_Table  <: AbstractDataFrame
             y = jk(ry, K_new(v))
         end
         a = asarray(xT(xD(x, y)))
-        new(a)
+        DataFrames.DataFrame(a)
     end
 end
-K_Table(df::AbstractDataFrame) = K_Table(K_new(df))
+K_Table(df::DataFrame) = K_Table(K_new(df))
 function K_Table(::Type{T}, n::Integer) where {T <: NamedTuple}
     cols = fieldnames(T)
     x = K_new(cols)
@@ -53,7 +53,7 @@ function DataFrames.names!(x::K_Table, vals; allow_duplicates=true)
     kS(kK(x.a[])[1])[:] = map(ss, u)
     x
 end
-_check_consistency(x::K_Table) = _check_consistency(x)
+
 Base.getindex(x::K_Table, i::Integer) = K(r1(valptr(x, i)))
 Base.getindex(x::K_Table, i::Integer, j::Integer) = x[j][i]
 Base.getindex(x::K_Table, i::Symbol) = x[DataFrames.index(x)[i]]

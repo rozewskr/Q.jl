@@ -1,3 +1,5 @@
+using Test
+using Q
 
 @testset "atom tests" begin
   @testset "atom from low level" for (t, kx, K_x, v) in [
