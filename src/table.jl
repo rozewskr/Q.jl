@@ -1,7 +1,7 @@
 import TableTraits
 using Serialization
 using DataFrames
-struct K_Table
+struct K_Table <: AbstractDataFrame
     a::Array{K_,0}
     function K_Table(x::K_)
         a = asarray(x)
@@ -9,14 +9,14 @@ struct K_Table
         if(t != XT)
             throw(ArgumentError("type mismatch: t=$t ≠ $XT"))
         end
-        return DataFrames.DataFrame(a)
+        return new(a)
     end
     function K_Table(columns::Vector, colnames::Vector{Symbol})
         ncols = length(columns)
         x = K_new(colnames)
         y = K_new(columns)
         a = asarray(xT(xD(x, y)))
-        DataFrames.DataFrame(a)
+        new(a)
     end
     function K_Table(; kwargs...)
         x = ktn(KS, 0)
@@ -27,10 +27,10 @@ struct K_Table
             y = jk(ry, K_new(v))
         end
         a = asarray(xT(xD(x, y)))
-        DataFrames.DataFrame(a)
+        new(a)
     end
 end
-K_Table(df::DataFrame) = K_Table(K_new(df))
+K_Table(df::AbstractDataFrame) = K_Table(K_new(df))
 function K_Table(::Type{T}, n::Integer) where {T <: NamedTuple}
     cols = fieldnames(T)
     x = K_new(cols)
@@ -57,6 +57,46 @@ end
 Base.getindex(x::K_Table, i::Integer) = K(r1(valptr(x, i)))
 Base.getindex(x::K_Table, i::Integer, j::Integer) = x[j][i]
 Base.getindex(x::K_Table, i::Symbol) = x[DataFrames.index(x)[i]]
+function genkeymap(gd, cols)
+    # currently we use Dict{Any,Int} because then field :keymap in GroupedDataFrame
+    # has a concrete type which makes the access to it faster as we do not have a dynamic
+    # dispatch when indexing into it. In the future an optimization of this approach
+    # can be investigated (also taking compilation time into account).
+    d = Dict{Any,Int}()
+    gdidx = gd.idx
+    sizehint!(d, length(gd.starts))
+    for (i, s) in enumerate(gd.starts)
+        d[getindex.(cols, gdidx[s])] = i
+    end
+    d
+end
+
+function Base.getproperty(gd::K_Table, f::Symbol)
+    if f in (:idx, :starts, :ends)
+        # Group indices are computed lazily the first time they are accessed
+        # Do not lock when field is already initialized
+        if getfield(gd, f) === nothing
+            Threads.lock(gd.lazy_lock)
+            if getfield(gd, f) === nothing # Do not lock when field is already initialized
+                gd.idx, gd.starts, gd.ends = compute_indices(gd.groups, gd.ngroups)
+            end
+            Threads.unlock(gd.lazy_lock)
+        end
+        return getfield(gd, f)::Vector{Int}
+    elseif f === :keymap
+        # Keymap is computed lazily the first time it is accessed
+        if getfield(gd, f) === nothing # Do not lock when field is already initialized
+            Threads.lock(gd.lazy_lock)
+            if getfield(gd, f) === nothing
+                gd.keymap = genkeymap(gd, ntuple(i -> parent(gd)[!, gd.cols[i]], length(gd.cols)))
+            end
+            Threads.unlock(gd.lazy_lock)
+        end
+        return getfield(gd, f)::Dict{Any,Int}
+    else
+        return getfield(gd, f)
+    end
+end
 
 ## IterableTable protocol
 
