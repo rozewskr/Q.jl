@@ -14,6 +14,8 @@ typedef void (*jl_parse_opts_t)(int *argcp, char ***argvp);
 typedef void (*jl_set_ARGS_t)(int argc, char **argv);
 typedef void (*jl_init_with_image_t)(const char *julia_home_dir,
                                      const char *image_relative_path);
+typedef void (*jl_init_with_image__threading_t)(const char *julia_home_dir,
+																			const char *image_relative_path);
 typedef char* (*jl_get_default_sysimg_path_t)(void);
 typedef void (*jl_atexit_hook_t)(int);
 typedef jl_value_t* (*jl_eval_string_t)(const char *);
@@ -30,6 +32,7 @@ typedef double (*jl_unbox_float64_t)(jl_value_t *v);
 Z jl_parse_opts_t jl_parse_opts_p;
 Z jl_set_ARGS_t jl_set_ARGS_p;
 Z jl_init_with_image_t jl_init_with_image_p;
+Z jl_init_with_image__threading_t jl_init_with_image__threading_p;
 Z jl_get_default_sysimg_path_t jl_get_default_sysimg_path_p;
 Z jl_atexit_hook_t jl_atexit_hook_p;
 Z jl_eval_string_t jl_eval_string_p;
