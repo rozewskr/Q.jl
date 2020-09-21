@@ -46,11 +46,11 @@ Serialization.serialize(io::Serialization.AbstractSerializer, x::K_Table) =
     _serialize(io, x, typeof(x))
 
 ncol(x::K_Table) = Int(xn(xx(x.a[])))
-
+println(ncol)
 nrow(x::K_Table) = Int(xn(valptr(x, 1)))
-
+println(nrow)
 index(x::K_Table) = DataFrames.Index(Array(colnames(x)))
-
+println(index)
 function DataFrames.names!(x::K_Table, vals; allow_duplicates=true)
     u = DataFrames.make_unique(vals, allow_duplicates=allow_duplicates)
     kS(kK(x.a[])[1])[:] = map(ss, u)
